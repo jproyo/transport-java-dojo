@@ -2,6 +2,10 @@ package edu.jproyo.dojos.transjprs.model;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.Set;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +20,9 @@ public class RoutePathTest {
 
 	@Test
 	public void testGetSegments() {
-		fail("Not yet implemented");
+		target.getRoutePath().addAll(Arrays.asList(new String[]{"A","B","C"}));
+		Optional<Set<Route>> segments = target.getSegments();
+		assertTrue(segments.isPresent());
 	}
 
 }
