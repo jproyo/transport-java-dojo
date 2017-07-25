@@ -1,6 +1,8 @@
 package edu.jproyo.dojos.transjprs.model;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Set;
@@ -39,12 +41,26 @@ public class RoutePath {
 	 */
 	public static RoutePath as(String ...cities) {
 		RoutePath path = new RoutePath();
-		Arrays.stream(cities).forEach(path.routePath::add);
+		path.routePath.addAll(Arrays.asList(cities));
 		return path;
 	}
 
+	/**
+	 * Gets the segments.
+	 *
+	 * @return the segments
+	 */
 	public Optional<Set<Route>> getSegments() {
-		return null;
+		if(routePath == null || routePath.isEmpty()) return Optional.empty();
+		Iterator<String> iterator = routePath.iterator();
+		Set<Route> routes = new HashSet<>();
+		String first = iterator.next();
+		while(iterator.hasNext()){
+			String elem = iterator.next();
+			routes.add(Route.as(first, elem, 0));
+			first = elem;
+		}
+		return Optional.ofNullable(routes);
 	}
 
 }
