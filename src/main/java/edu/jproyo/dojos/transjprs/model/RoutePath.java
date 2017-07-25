@@ -10,14 +10,14 @@ import java.util.List;
 public class RoutePath {
 	
 	/** The route path. */
-	private List<String> routePath = new LinkedList<>();
+	private LinkedList<String> routePath = new LinkedList<>();
 
 	/**
 	 * Gets the route path.
 	 *
 	 * @return the route path
 	 */
-	public List<String> getRoutePath() {
+	public LinkedList<String> getRoutePath() {
 		return routePath;
 	}
 
@@ -26,7 +26,7 @@ public class RoutePath {
 	 *
 	 * @param routePath the new route path
 	 */
-	public void setRoutePath(List<String> routePath) {
+	public void setRoutePath(LinkedList<String> routePath) {
 		this.routePath = routePath;
 	}
 

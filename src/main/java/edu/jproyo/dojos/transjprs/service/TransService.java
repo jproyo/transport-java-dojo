@@ -1,5 +1,6 @@
 package edu.jproyo.dojos.transjprs.service;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import edu.jproyo.dojos.transjprs.model.Point;
@@ -14,6 +15,9 @@ public class TransService {
 
 	/** The routes. */
 	public Set<Route> routes;
+	
+	/** The result. */
+	public StateResult result = new StateResult();
 
 	/**
 	 * Sets the routes.
@@ -41,6 +45,17 @@ public class TransService {
 	 * @return the trans service
 	 */
 	public TransService calculateDistance(RoutePath route) {
+		if(route.getRoutePath().isEmpty()){
+			result.add(StateResult.NO_SUCH_ROUTE);
+			return this;
+		}
+		Iterator<String> iterator = route.getRoutePath().iterator();
+		
+		String first = iterator.next();
+		while(iterator.hasNext()) {
+			String element = iterator.next();
+			
+		}
 		return this;
 	}
 
