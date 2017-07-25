@@ -19,6 +19,16 @@ import edu.jproyo.dojos.transjprs.model.StopsCondition;
  * The Class TransIntegrationTest.
  */
 public class TransIntegrationTest {
+	
+	@Test(expected = IllegalStateException.class)
+	public void testInputOutputFailNoRoutesProvided() {
+		TransService.create().build();
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testInputOutputFailNoRoutesProvidedNullSet() {
+		TransService.create().withRoutes(null).build();
+	}
 
 	/**
 	 * Test input output successfully.
