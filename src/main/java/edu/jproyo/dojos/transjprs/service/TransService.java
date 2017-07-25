@@ -4,6 +4,7 @@ import java.util.Set;
 
 import edu.jproyo.dojos.transjprs.model.Point;
 import edu.jproyo.dojos.transjprs.model.Route;
+import edu.jproyo.dojos.transjprs.model.RoutePath;
 import edu.jproyo.dojos.transjprs.model.StopsCondition;
 
 /**
@@ -39,7 +40,7 @@ public class TransService {
 	 * @param route the route
 	 * @return the trans service
 	 */
-	public TransService calculateDistance(Route route) {
+	public TransService calculateDistance(RoutePath route) {
 		return this;
 	}
 
@@ -61,7 +62,7 @@ public class TransService {
 	 * @param route the route
 	 * @return the trans service
 	 */
-	public TransService shortestRouteLength(Route route) {
+	public TransService shortestRouteLength(RoutePath route) {
 		return this;
 	}
 
