@@ -17,7 +17,7 @@ public class TransServiceTest {
 				.calculateDistance(RoutePath.as("A","E","D"))
 				.collect();
 		assertNotNull(result);
-		assertEquals(StateResult.NO_SUCH_ROUTE, result); 
+		assertEquals(StateResult.NO_SUCH_ROUTE, result.toString()); 
 
 	}
 
