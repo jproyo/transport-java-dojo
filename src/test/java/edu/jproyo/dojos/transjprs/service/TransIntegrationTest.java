@@ -1,17 +1,14 @@
 package edu.jproyo.dojos.transjprs.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Set;
 
 import org.junit.Test;
 
-import edu.jproyo.dojos.transjprs.model.Distance;
-import edu.jproyo.dojos.transjprs.model.FinishPoint;
+import edu.jproyo.dojos.transjprs.model.Point;
 import edu.jproyo.dojos.transjprs.model.Route;
-import edu.jproyo.dojos.transjprs.model.StartPoint;
-import edu.jproyo.dojos.transjprs.model.Stops;
-import edu.jproyo.dojos.transjprs.service.TransService;
+import edu.jproyo.dojos.transjprs.model.StopsCondition;
 
 public class TransIntegrationTest {
 
@@ -25,11 +22,11 @@ public class TransIntegrationTest {
 				.calculateDistance(Route.as("A","D","C"))
 				.calculateDistance(Route.as("A","E","B","C","D"))
 				.calculateDistance(Route.as("A","E","D"))
-				.numberOfTrips(StartPoint.as("C"), FinishPoint.as("C"), Stops.atLeast(3))
-				.numberOfTrips(StartPoint.as("A"), FinishPoint.as("C"), Stops.exactly(4))
+				.numberOfTrips(Point.start("C"), Point.finish("C"), StopsCondition.atLeast(3))
+				.numberOfTrips(Point.start("A"), Point.finish("C"), StopsCondition.exactly(4))
 				.shortestRouteLength(Route.as("A", "C"))
 				.shortestRouteLength(Route.as("B", "B"))
-				.numberOfRoutes(StartPoint.as("C"), FinishPoint.as("C"), Distance.less(30))
+				.numberOfRoutes(Point.start("C"), Point.finish("C"), StopsCondition.distanceLess(30))
 				.collect();
 		assertNotNull(result);
 	}

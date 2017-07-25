@@ -2,11 +2,9 @@ package edu.jproyo.dojos.transjprs.service;
 
 import java.util.Set;
 
-import edu.jproyo.dojos.transjprs.model.Distance;
-import edu.jproyo.dojos.transjprs.model.FinishPoint;
+import edu.jproyo.dojos.transjprs.model.Point;
 import edu.jproyo.dojos.transjprs.model.Route;
-import edu.jproyo.dojos.transjprs.model.StartPoint;
-import edu.jproyo.dojos.transjprs.model.Stops;
+import edu.jproyo.dojos.transjprs.model.StopsCondition;
 
 /**
  * The Class TransService.
@@ -39,7 +37,7 @@ public class TransService {
 		return this;
 	}
 
-	public TransService numberOfTrips(StartPoint start, FinishPoint finish, Stops atLeast) {
+	public TransService numberOfTrips(Point start, Point finish, StopsCondition atLeast) {
 		return null;
 	}
 
@@ -47,7 +45,7 @@ public class TransService {
 		return null;
 	}
 
-	public TransService numberOfRoutes(StartPoint start, FinishPoint finish, Distance distance) {
+	public TransService numberOfRoutes(Point start, Point finish, StopsCondition distanceLess) {
 		return null;
 	}
 	
