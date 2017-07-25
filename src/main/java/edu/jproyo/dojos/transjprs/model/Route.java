@@ -1,5 +1,7 @@
 package edu.jproyo.dojos.transjprs.model;
 
+import java.util.Optional;
+
 /**
  * The Class Route.
  */
@@ -119,6 +121,55 @@ public class Route {
 		route.setTo(to);
 		route.setWeight(weight);
 		return route;
+	}
+
+	/**
+	 * As.
+	 *
+	 * @param joined the joined
+	 * @return the optional
+	 */
+	public static Optional<Route> as(String joined) {
+		return Optional.ofNullable(joined)
+			.flatMap(Route::validate)
+			.flatMap(Route::split);
+	}
+	
+	/**
+	 * Split.
+	 *
+	 * @param joined the joined
+	 * @return the optional
+	 */
+	private static Optional<String> validate(String joined){
+		if(joined.isEmpty() || joined.length() < 3){
+			return Optional.empty();
+		}else{
+			return Optional.ofNullable(joined);
+		}
+	}
+	
+	/**
+	 * Split.
+	 *
+	 * @param joined the joined
+	 * @return the optional
+	 */
+	private static Optional<Route> split(String joined){
+		char[] charArray = joined.toCharArray();
+		char fromChar = charArray[0];
+		if(!Character.isLetter(fromChar)) return Optional.empty();
+		char toChar = charArray[1];
+		if(!Character.isLetter(toChar)) return Optional.empty();
+		String from = Character.toString(fromChar);
+		String to = Character.toString(toChar);
+		Integer weight = null;
+		try {
+			weight = Integer.parseInt(joined.substring(2, joined.length()));
+		} catch (NumberFormatException e) {	
+			return Optional.empty();
+		}
+		return Optional.ofNullable(Route.as(from, to, weight));
 	}
 
 }

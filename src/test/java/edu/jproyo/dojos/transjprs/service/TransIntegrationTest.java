@@ -2,7 +2,11 @@ package edu.jproyo.dojos.transjprs.service;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import org.junit.Test;
 
@@ -11,8 +15,14 @@ import edu.jproyo.dojos.transjprs.model.Route;
 import edu.jproyo.dojos.transjprs.model.RoutePath;
 import edu.jproyo.dojos.transjprs.model.StopsCondition;
 
+/**
+ * The Class TransIntegrationTest.
+ */
 public class TransIntegrationTest {
 
+	/**
+	 * Test input output successfully.
+	 */
 	@Test
 	public void testInputOutputSuccessfully() {
 		StateResult result = TransService.create()
@@ -32,9 +42,16 @@ public class TransIntegrationTest {
 		assertNotNull(result);
 	}
 
+	/**
+	 * Default routes.
+	 *
+	 * @return the sets the
+	 */
 	private Set<Route> defaultRoutes() {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Route> routes = new HashSet<>();
+		String routesUnparsed = "AB5,BC4,CD8,DC8,DE6,AD5,CE2,EB3,AE7";
+		Arrays.stream(routesUnparsed.split(",")).forEach(c -> routes.add(Route.as(c).orElseThrow(() -> new RuntimeException("Error parsing value "+c))));
+		return routes;
 	}
 
 }
