@@ -30,4 +30,36 @@ public class RoutePathTest {
 		assertFalse(iterator.hasNext());
 	}
 
+	@Test
+	public void testGetSegmentsSecondCase() {
+		target.getRoutePath().addAll(Arrays.asList(new String[]{"A","B","C","D"}));
+		Optional<Set<Route>> segments = target.getSegments();
+		assertTrue(segments.isPresent());
+		Iterator<Route> iterator = segments.get().iterator();
+		assertEquals(Route.as("A","B",null), iterator.next());
+		assertEquals(Route.as("B","C",null), iterator.next());
+		assertEquals(Route.as("C","D",null), iterator.next());
+		assertFalse(iterator.hasNext());
+	}
+	
+	@Test
+	public void testGetSegmentsThirdCase() {
+		target.getRoutePath().addAll(Arrays.asList(new String[]{"A","B","C","D", "E"}));
+		Optional<Set<Route>> segments = target.getSegments();
+		assertTrue(segments.isPresent());
+		Iterator<Route> iterator = segments.get().iterator();
+		assertEquals(Route.as("A","B",null), iterator.next());
+		assertEquals(Route.as("B","C",null), iterator.next());
+		assertEquals(Route.as("C","D",null), iterator.next());
+		assertEquals(Route.as("D","E",null), iterator.next());
+		assertFalse(iterator.hasNext());
+	}
+	
+	@Test
+	public void testGetSegmentsFailNoRoutes() {
+		Optional<Set<Route>> segments = target.getSegments();
+		assertFalse(segments.isPresent());
+	}
+	
+	
 }
