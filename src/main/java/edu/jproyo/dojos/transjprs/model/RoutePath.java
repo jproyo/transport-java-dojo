@@ -2,7 +2,8 @@ package edu.jproyo.dojos.transjprs.model;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * The Class RoutePath.
@@ -40,6 +41,10 @@ public class RoutePath {
 		RoutePath path = new RoutePath();
 		Arrays.stream(cities).forEach(path.routePath::add);
 		return path;
+	}
+
+	public Optional<Set<Route>> getSegments() {
+		return null;
 	}
 
 }

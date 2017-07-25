@@ -4,9 +4,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import org.junit.Test;
 
