@@ -1,5 +1,6 @@
 package edu.jproyo.dojos.transjprs.model;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,7 +37,9 @@ public class RoutePath {
 	 * @return the route path
 	 */
 	public static RoutePath as(String ...cities) {
-		return null;
+		RoutePath path = new RoutePath();
+		Arrays.stream(cities).forEach(path.routePath::add);
+		return path;
 	}
 
 }
