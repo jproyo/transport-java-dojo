@@ -18,7 +18,16 @@ public class TransServiceTest {
 				.collect();
 		assertNotNull(result);
 		assertEquals(StateResult.NO_SUCH_ROUTE, result.toString()); 
-
 	}
 
+	@Test
+	public void testCalculateDistanceSomeRoute() {
+		StateResult result = TransService.create()
+				.withRoutes(DataLoader.defaultRoutes())
+				.build()
+				.calculateDistance(RoutePath.as("A","B","C"))
+				.collect();
+		assertNotNull(result);
+		assertEquals("9", result.toString()); 
+	}
 }
