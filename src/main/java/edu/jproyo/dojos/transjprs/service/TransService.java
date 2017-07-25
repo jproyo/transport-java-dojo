@@ -33,20 +33,48 @@ public class TransService {
 	}
 	
 
+	/**
+	 * Calculate distance.
+	 *
+	 * @param route the route
+	 * @return the trans service
+	 */
 	public TransService calculateDistance(Route route) {
 		return this;
 	}
 
+	/**
+	 * Number of trips.
+	 *
+	 * @param start the start
+	 * @param finish the finish
+	 * @param atLeast the at least
+	 * @return the trans service
+	 */
 	public TransService numberOfTrips(Point start, Point finish, StopsCondition atLeast) {
-		return null;
+		return this;
 	}
 
+	/**
+	 * Shortest route length.
+	 *
+	 * @param route the route
+	 * @return the trans service
+	 */
 	public TransService shortestRouteLength(Route route) {
-		return null;
+		return this;
 	}
 
+	/**
+	 * Number of routes.
+	 *
+	 * @param start the start
+	 * @param finish the finish
+	 * @param distanceLess the distance less
+	 * @return the trans service
+	 */
 	public TransService numberOfRoutes(Point start, Point finish, StopsCondition distanceLess) {
-		return null;
+		return this;
 	}
 	
 	/**
@@ -89,6 +117,11 @@ public class TransService {
 		
 	}
 
+	/**
+	 * Collect.
+	 *
+	 * @return the state result
+	 */
 	public StateResult collect() {
 		// TODO Auto-generated method stub
 		return null;
