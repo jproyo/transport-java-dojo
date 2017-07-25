@@ -107,6 +107,11 @@ public class Route {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("[%s->%d->%s]", from, weight, to);
+	}
+	
 	/**
 	 * As.
 	 *

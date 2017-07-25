@@ -1,8 +1,8 @@
 package edu.jproyo.dojos.transjprs.model;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Set;
@@ -53,7 +53,7 @@ public class RoutePath {
 	public Optional<Set<Route>> getSegments() {
 		if(routePath == null || routePath.isEmpty()) return Optional.empty();
 		Iterator<String> iterator = routePath.iterator();
-		Set<Route> routes = new HashSet<>();
+		Set<Route> routes = new LinkedHashSet<>();
 		String first = iterator.next();
 		while(iterator.hasNext()){
 			String elem = iterator.next();

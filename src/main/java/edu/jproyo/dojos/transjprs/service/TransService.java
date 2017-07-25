@@ -1,5 +1,6 @@
 package edu.jproyo.dojos.transjprs.service;
 
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ import edu.jproyo.dojos.transjprs.model.StopsCondition;
 public class TransService {
 
 	/** The routes. */
-	private Set<Route> routes;
+	private Set<Route> routes = new LinkedHashSet<>();
 	
 	/** The result. */
 	private StateResult result = new StateResult();
@@ -47,11 +48,15 @@ public class TransService {
 	 */
 	public TransService calculateDistance(RoutePath route) {
 		String resultMessage = route.getSegments()
-				.flatMap(s ->
-					Optional.ofNullable(routes.stream()
-					.filter(r -> s.contains(r))
-					.collect(Collectors.summingInt(Route::getWeight)).intValue())
-				).map(Object::toString).orElse(StateResult.NO_SUCH_ROUTE);
+				.flatMap(s -> {
+					if(routes.containsAll(s)){
+						return Optional.ofNullable(routes.stream()
+								.filter(r -> s.contains(r))
+								.collect(Collectors.summingInt(Route::getWeight)).intValue());
+					}else{
+						return Optional.empty();
+					}
+				}).map(Object::toString).orElse(StateResult.NO_SUCH_ROUTE);
 		result.add(resultMessage);
 		return this;
 	}
@@ -90,6 +95,9 @@ public class TransService {
 		return this;
 	}
 	
+	/**
+	 * Validate.
+	 */
 	public void validate() {
 		if(routes == null || routes.isEmpty()) throw new IllegalStateException("No Routes Provided");
 	}
@@ -141,8 +149,7 @@ public class TransService {
 	 * @return the state result
 	 */
 	public StateResult collect() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.result;
 	}
 
 

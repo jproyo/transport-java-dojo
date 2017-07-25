@@ -2,6 +2,7 @@ package edu.jproyo.dojos.transjprs.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The Class StateResult.
@@ -22,6 +23,11 @@ public class StateResult {
 	 */
 	public void add(String result) {
 		this.results.add(result);
+	}
+	
+	@Override
+	public String toString() {
+		return results.stream().collect(Collectors.joining("\n"));
 	}
 
 }
