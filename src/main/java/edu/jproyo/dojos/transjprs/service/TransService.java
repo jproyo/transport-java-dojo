@@ -14,10 +14,10 @@ import edu.jproyo.dojos.transjprs.model.StopsCondition;
 public class TransService {
 
 	/** The routes. */
-	public Set<Route> routes;
+	private Set<Route> routes;
 	
 	/** The result. */
-	public StateResult result = new StateResult();
+	private StateResult result = new StateResult();
 
 	/**
 	 * Sets the routes.
@@ -93,6 +93,10 @@ public class TransService {
 		return this;
 	}
 	
+	public void validate() {
+		if(routes == null || routes.isEmpty()) throw new IllegalStateException("No Routes Provided");
+	}
+
 	/**
 	 * Creates the.
 	 *
@@ -127,6 +131,7 @@ public class TransService {
 		 * @return the trans service
 		 */
 		public TransService build() {
+			this.target.validate();
 			return this.target;
 		}
 		
