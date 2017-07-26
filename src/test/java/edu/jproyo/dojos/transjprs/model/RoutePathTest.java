@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -69,8 +70,9 @@ public class RoutePathTest {
 	
 	@Test
 	public void testAllPosiblePaths() {
-		Map<Route, LinkedList<Route>> allPosiblePaths = RoutePath.allPosiblePaths(DataLoader.defaultRoutes());
-		LinkedList<Route> linkedList = allPosiblePaths.get(Route.as("C", "E", 0));
+		Set<Route> defaultRoutes = DataLoader.defaultRoutes();
+		Map<Route, Set<Route>> allPosiblePaths = RoutePath.allPosiblePaths(defaultRoutes);
+		Set<Route> linkedList = allPosiblePaths.get(Route.as("C", "E", 0));
 		assertNotNull(linkedList);
 	}
 	

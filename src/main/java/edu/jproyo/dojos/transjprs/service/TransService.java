@@ -1,7 +1,7 @@
 package edu.jproyo.dojos.transjprs.service;
 
+import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -73,14 +73,15 @@ public class TransService {
 	 * @return the trans service
 	 */
 	public TransService numberOfTrips(Point start, Point finish, StopsCondition condition) {
-		Map<Route, LinkedList<Route>> paths = RoutePath.allPosiblePaths(routes);
+		Map<Route, Set<Route>> paths = RoutePath.allPosiblePaths(routes);
 		List<Route> selectedStarted = paths.keySet().stream().filter(route -> route.getFrom().equals(start.getStop())).collect(Collectors.toList());
 		int count = 0;
 		for (Route routeStarted : selectedStarted) {
-			LinkedList<Route> routes = paths.get(routeStarted);
-			for (int i = 0; i < routes.size() && condition.applyCondition(i+1); i++) {
-				Route routeCurrent = routes.get(i);
-				if(routeCurrent.getTo().equals(finish.getStop())){
+			Set<Route> routes = paths.get(routeStarted);
+			Iterator<Route> iterator = routes.iterator();
+			for (int i = 0; iterator.hasNext(); i++) {
+				Route routeCurrent = iterator.next();
+				if(routeCurrent.getTo().equals(finish.getStop()) && condition.applyCondition(i+1)){
 					++count;
 					break;
 				}
