@@ -117,7 +117,7 @@ public class StopsCondition {
 		case atLeast:
 			return stops <= this.stops;
 		case distanceLessThan:
-			return stops < this.stops;
+			return stops <= this.stops;
 		case exactly:
 			return stops.equals(this.stops);
 		}

@@ -25,6 +25,18 @@ public class StateResult {
 		this.results.add(result);
 	}
 	
+	/**
+	 * Gets the results.
+	 *
+	 * @return the results
+	 */
+	public List<String> getResults() {
+		return results;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return results.stream().collect(Collectors.joining("\n"));

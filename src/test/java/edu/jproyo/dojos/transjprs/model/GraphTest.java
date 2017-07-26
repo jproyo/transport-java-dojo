@@ -15,28 +15,30 @@ public class GraphTest {
 	public void testNumberOfTrips() {
 		Set<Route> defaultRoutes = DataLoader.defaultRoutes();
 		Graph fromRoutes = Graph.fromRoutes(defaultRoutes);
-		Integer numberOfTrips = fromRoutes.numberOfTrips("C", "C", StopsCondition.atLeast(3));
+		Optional<Integer> numberOfTrips = fromRoutes.numberOfTrips("C", "C", StopsCondition.atLeast(3));
 		assertNotNull(numberOfTrips);
-		assertEquals(new Integer(2), numberOfTrips);
+		assertTrue(numberOfTrips.isPresent());
+		assertEquals(new Integer(2), numberOfTrips.get());
 	}
 	
 	@Test
 	public void testNumberOfTripsSecondCase() {
 		Set<Route> defaultRoutes = DataLoader.defaultRoutes();
 		Graph fromRoutes = Graph.fromRoutes(defaultRoutes);
-		Integer numberOfTrips = fromRoutes.numberOfTrips("A", "C", StopsCondition.exactly(4));
+		Optional<Integer> numberOfTrips = fromRoutes.numberOfTrips("A", "C", StopsCondition.exactly(4));
 		assertNotNull(numberOfTrips);
+		assertTrue(numberOfTrips.isPresent());
 		//Problem is wrong. A -> C should be 2 not 3
-		assertEquals(new Integer(2), numberOfTrips);
+		assertEquals(new Integer(2), numberOfTrips.get());
 	}
 
 	@Test
 	public void testNumberOfTripsNoRoute() {
 		Set<Route> defaultRoutes = DataLoader.defaultRoutes();
 		Graph fromRoutes = Graph.fromRoutes(defaultRoutes);
-		Integer numberOfTrips = fromRoutes.numberOfTrips("A", "Z", StopsCondition.exactly(4));
+		Optional<Integer> numberOfTrips = fromRoutes.numberOfTrips("A", "Z", StopsCondition.exactly(4));
 		assertNotNull(numberOfTrips);
-		assertEquals(new Integer(0), numberOfTrips);
+		assertFalse(numberOfTrips.isPresent());
 	}
 	
 	@Test

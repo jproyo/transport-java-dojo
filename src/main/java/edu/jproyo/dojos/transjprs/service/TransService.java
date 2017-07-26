@@ -59,12 +59,8 @@ public class TransService {
 	 * @return the trans service
 	 */
 	public TransService numberOfTrips(String start, String finish, StopsCondition condition) {
-		Integer number = graph.numberOfTrips(start, finish, condition);
-		if(number > 0){
-			result.add(number.toString());
-		}else{
-			result.add(StateResult.NO_SUCH_ROUTE);
-		}
+		String numberOfTrips = graph.numberOfTrips(start, finish, condition).map(Object::toString).orElse(StateResult.NO_SUCH_ROUTE);
+		result.add(numberOfTrips);
 		return this;
 	}
 
@@ -85,10 +81,12 @@ public class TransService {
 	 *
 	 * @param start the start
 	 * @param finish the finish
-	 * @param distanceLess the distance less
+	 * @param condition the distance less
 	 * @return the trans service
 	 */
-	public TransService numberOfRoutes(String start, String finish, StopsCondition distanceLess) {
+	public TransService numberOfRoutes(String start, String finish, StopsCondition condition) {
+		String numberOfRoutes = graph.amountRoutes(start, finish, condition).map(Object::toString).orElse(StateResult.NO_SUCH_ROUTE);
+		result.add(numberOfRoutes);
 		return this;
 	}
 	
