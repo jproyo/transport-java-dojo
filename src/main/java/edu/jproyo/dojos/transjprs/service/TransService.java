@@ -1,13 +1,13 @@
 package edu.jproyo.dojos.transjprs.service;
 
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import edu.jproyo.dojos.transjprs.model.Graph;
 import edu.jproyo.dojos.transjprs.model.Point;
 import edu.jproyo.dojos.transjprs.model.Route;
 import edu.jproyo.dojos.transjprs.model.RoutePath;
@@ -19,27 +19,28 @@ import edu.jproyo.dojos.transjprs.model.StopsCondition;
 public class TransService {
 
 	/** The routes. */
-	private Set<Route> routes = new LinkedHashSet<>();
+	private Graph graph;
 	
 	/** The result. */
 	private StateResult result = new StateResult();
 
+	
 	/**
-	 * Sets the routes.
+	 * Sets the graph.
 	 *
-	 * @param routes the new routes
+	 * @param graph the new graph
 	 */
-	public void setRoutes(Set<Route> routes) {
-		this.routes = routes;
+	public void setGraph(Graph graph) {
+		this.graph = graph;
 	}
 	
 	/**
-	 * Gets the routes.
+	 * Gets the graph.
 	 *
-	 * @return the routes
+	 * @return the graph
 	 */
-	public Set<Route> getRoutes() {
-		return routes;
+	public Graph getGraph() {
+		return graph;
 	}
 	
 
@@ -50,16 +51,7 @@ public class TransService {
 	 * @return the trans service
 	 */
 	public TransService calculateDistance(RoutePath route) {
-		String resultMessage = route.getSegments()
-				.flatMap(s -> {
-					if(routes.containsAll(s)){
-						return Optional.ofNullable(routes.stream()
-								.filter(r -> s.contains(r))
-								.collect(Collectors.summingInt(Route::getWeight)).intValue());
-					}else{
-						return Optional.empty();
-					}
-				}).map(Object::toString).orElse(StateResult.NO_SUCH_ROUTE);
+		String resultMessage = route.getSegments().flatMap(s -> graph.distanceTo(s)).map(Object::toString).orElse(StateResult.NO_SUCH_ROUTE);
 		result.add(resultMessage);
 		return this;
 	}
@@ -69,25 +61,26 @@ public class TransService {
 	 *
 	 * @param start the start
 	 * @param finish the finish
-	 * @param atLeast the at least
+	 * @param condition the condition
 	 * @return the trans service
 	 */
 	public TransService numberOfTrips(Point start, Point finish, StopsCondition condition) {
-		Map<Route, Set<Route>> paths = RoutePath.allPosiblePaths(routes);
-		List<Route> selectedStarted = paths.keySet().stream().filter(route -> route.getFrom().equals(start.getStop())).collect(Collectors.toList());
-		int count = 0;
-		for (Route routeStarted : selectedStarted) {
-			Set<Route> routes = paths.get(routeStarted);
-			Iterator<Route> iterator = routes.iterator();
-			for (int i = 0; iterator.hasNext(); i++) {
-				Route routeCurrent = iterator.next();
-				if(routeCurrent.getTo().equals(finish.getStop()) && condition.applyCondition(i+1)){
-					++count;
-					break;
-				}
-			}
-		}
-		result.add(Integer.toString(count));
+		graph.numberOfTrips(start, finish)
+//		Map<Route, Set<Route>> paths = RoutePath.allPosiblePaths(routes);
+//		List<Route> selectedStarted = paths.keySet().stream().filter(route -> route.getFrom().equals(start.getStop())).collect(Collectors.toList());
+//		int count = 0;
+//		for (Route routeStarted : selectedStarted) {
+//			Set<Route> routes = paths.get(routeStarted);
+//			Iterator<Route> iterator = routes.iterator();
+//			for (int i = 0; iterator.hasNext(); i++) {
+//				Route routeCurrent = iterator.next();
+//				if(routeCurrent.getTo().equals(finish.getStop()) && condition.applyCondition(i+1)){
+//					++count;
+//					break;
+//				}
+//			}
+//		}
+//		result.add(Integer.toString(count));
 		return this;
 	}
 
@@ -117,7 +110,8 @@ public class TransService {
 	 * Validate.
 	 */
 	public void validate() {
-		if(routes == null || routes.isEmpty()) throw new IllegalStateException("No Routes Provided");
+		if(graph == null) throw new IllegalStateException("No Routes Provided");
+		graph.validate();
 	}
 
 	/**
@@ -140,11 +134,11 @@ public class TransService {
 		/**
 		 * With routes.
 		 *
-		 * @param defaultRules the default rules
+		 * @param routes the default rules
 		 * @return the builder
 		 */
-		public Builder withRoutes(Set<Route> defaultRules) {
-			this.target.routes = defaultRules;
+		public Builder withRoutes(Set<Route> routes) {			
+			this.target.graph = Graph.fromRoutes(routes);
 			return this;
 		}
 

@@ -30,4 +30,15 @@ public class TransServiceTest {
 		assertNotNull(result);
 		assertEquals("9", result.toString()); 
 	}
+	
+	@Test
+	public void testCalculateDistanceSomeOtherRoute() {
+		StateResult result = TransService.create()
+				.withRoutes(DataLoader.defaultRoutes())
+				.build()
+				.calculateDistance(RoutePath.as("A","D"))
+				.collect();
+		assertNotNull(result);
+		assertEquals("5", result.toString()); 
+	}
 }

@@ -37,7 +37,7 @@ public class TransIntegrationTest {
 				.calculateDistance(RoutePath.as("A","D","C"))
 				.calculateDistance(RoutePath.as("A","E","B","C","D"))
 				.calculateDistance(RoutePath.as("A","E","D"))
-				.numberOfTrips(Point.start("C"), Point.finish("C"), StopsCondition.atLeast(3))
+				.numberOfTrips("C", "C", StopsCondition.atLeast(3))
 				.numberOfTrips(Point.start("A"), Point.finish("C"), StopsCondition.exactly(4))
 				.shortestRouteLength(RoutePath.as("A", "C"))
 				.shortestRouteLength(RoutePath.as("B", "B"))
