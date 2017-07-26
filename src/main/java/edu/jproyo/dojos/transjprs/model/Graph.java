@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 /**
@@ -102,11 +101,23 @@ public class Graph {
 	 * @return the integer
 	 */
 	public Integer numberOfTrips(String start, String finish, StopsCondition condition) {
+		Set<Path> queueRoutes = buildRoutesFromTo(start, finish);
+		return new Long(queueRoutes.stream().map(Path::size).filter(condition::applyCondition).count()).intValue();
+	}
+
+	/**
+	 * Builds the routes from to.
+	 *
+	 * @param start the start
+	 * @param finish the finish
+	 * @return the sets the
+	 */
+	private Set<Path> buildRoutesFromTo(String start, String finish) {
 		Set<Path> queueRoutes = new HashSet<>();
 		for (Route route : routes.get(start)) {
 			recursiveBuild(queueRoutes, new Path(), route, finish);
 		}
-		return new Long(queueRoutes.stream().map(Path::size).filter(condition::applyCondition).count()).intValue();
+		return queueRoutes;
 	}
 	
 
@@ -138,5 +149,17 @@ public class Graph {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Shortest route.
+	 *
+	 * @param start the start
+	 * @param finish the finish
+	 * @return the integer
+	 */
+	public Optional<Integer> shortestRoute(String start, String finish) {
+		Set<Path> routes = buildRoutesFromTo(start, finish);
+		return routes.stream().map(Path::weight).min((int1, int2) -> Integer.compare(int1, int2));
 	}
 }

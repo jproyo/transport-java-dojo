@@ -70,7 +70,9 @@ public class TransService {
 	 * @param route the route
 	 * @return the trans service
 	 */
-	public TransService shortestRouteLength(RoutePath route) {
+	public TransService shortestRouteLength(String start, String finish) {
+		String number = graph.shortestRoute(start, finish).map(Object::toString).orElse(StateResult.NO_SUCH_ROUTE);
+		result.add(number);
 		return this;
 	}
 

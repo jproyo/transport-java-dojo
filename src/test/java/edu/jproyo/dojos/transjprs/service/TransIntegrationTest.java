@@ -18,7 +18,7 @@ public class TransIntegrationTest {
 		TransService.create().build();
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test(expected = RuntimeException.class)
 	public void testInputOutputFailNoRoutesProvidedNullSet() {
 		TransService.create().withRoutes(null).build();
 	}
@@ -38,8 +38,8 @@ public class TransIntegrationTest {
 				.calculateDistance(RoutePath.as("A","E","D"))
 				.numberOfTrips("C", "C", StopsCondition.atLeast(3))
 				.numberOfTrips("A", "C", StopsCondition.exactly(4))
-				.shortestRouteLength(RoutePath.as("A", "C"))
-				.shortestRouteLength(RoutePath.as("B", "B"))
+				.shortestRouteLength("A", "C")
+				.shortestRouteLength("B", "B")
 				.numberOfRoutes("C", "C", StopsCondition.distanceLess(30))
 				.collect();
 		assertNotNull(result);

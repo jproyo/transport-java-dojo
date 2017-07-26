@@ -129,5 +129,15 @@ public class Path {
 	public Route getFirst() {
 		return this.path.getFirst();
 	}
+	
+	
+	/**
+	 * Weight.
+	 *
+	 * @return the integer
+	 */
+	public Integer weight(){
+		return this.path.stream().collect(Collectors.summingInt(Route::getWeight)).intValue();
+	}
 
 }
