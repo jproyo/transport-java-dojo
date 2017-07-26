@@ -26,7 +26,8 @@ public class GraphTest {
 		Graph fromRoutes = Graph.fromRoutes(defaultRoutes);
 		Integer numberOfTrips = fromRoutes.numberOfTrips("A", "C", StopsCondition.exactly(4));
 		assertNotNull(numberOfTrips);
-		assertEquals(new Integer(3), numberOfTrips);
+		//Problem is wrong. A -> C should be 2 not 3
+		assertEquals(new Integer(2), numberOfTrips);
 	}
 
 }

@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * The Class Graph.
@@ -106,53 +106,37 @@ public class Graph {
 		for (Route route : routes.get(start)) {
 			recursiveBuild(queueRoutes, new Path(), route, finish);
 		}
-		queueRoutes.forEach(System.out::println);
 		return new Long(queueRoutes.stream().map(Path::size).filter(condition::applyCondition).count()).intValue();
 	}
 	
 
-	public void recursiveBuild(Set<Path> queueRoutes, Path path, Route start, String finish){
-		path.add(start);
-		Set<Route> routesStart = routes.get(start.getTo());
-		for (Route route : routesStart) {
-			if(path.isLastToEqual(finish)){				
-				queueRoutes.add(path);
-				recursiveBuild(queueRoutes, path.makeNew(), route, finish);
-			}else if(!path.isLastToEqual(route.getFrom())){
-				Path newPath = path.makeNew();
-				newPath.removeLast();
-				if(newPath.isLastToEqual(route.getFrom())){
-					recursiveBuild(queueRoutes, newPath, route, finish);
-				}
-			} else if(!path.contains(route)){
-				recursiveBuild(queueRoutes, path, route, finish);
-			}else if(path.isLastToEqual(finish)){
-				queueRoutes.add(path);
-			}
-		}
-	}
-	
 	/**
 	 * Recursive build.
 	 *
 	 * @param queueRoutes the queue routes
 	 * @param path the path
-	 * @param start the start
+	 * @param startNode the start node
+	 * @param finish the finish
 	 */
-	public void recursiveBuild(Set<Path> queueRoutes, Path path, Route start){
-		path.add(start);
-		Set<Route> routesStart = routes.get(start.getTo());
+	public void recursiveBuild(Set<Path> queueRoutes, Path path, Route startNode, String finish){
+		path.add(startNode);
+		Set<Route> routesStart = routes.get(startNode.getTo());
 		for (Route route : routesStart) {
+			if(path.isLastToEqual(finish)){				
+				queueRoutes.add(path);
+				recursiveBuild(queueRoutes, path.makeNew(), route, finish);
+			} else if(!path.contains(route)){
+				recursiveBuild(queueRoutes, path, route, finish);
+			}
 			if(!path.isLastToEqual(route.getFrom())){
 				Path newPath = path.makeNew();
-				newPath.removeLast();
+				do {
+					newPath.removeLast();
+				} while (!newPath.isLastToEqual(route.getFrom()));
 				if(newPath.isLastToEqual(route.getFrom())){
-					recursiveBuild(queueRoutes, newPath, route);
+					recursiveBuild(queueRoutes, newPath, route, finish);
 				}
-			} else if(!path.contains(route)){
-				recursiveBuild(queueRoutes, path, route);
 			}
-			queueRoutes.add(path);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package edu.jproyo.dojos.transjprs.model;
 
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 /**
  * The Class Path.
@@ -42,6 +43,17 @@ public class Path {
 			equals = this.path.get(i).equals(other.path.get(i));
 		}
 		return equals;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((path == null) ? 0 : path.stream().map(Object::hashCode).collect(Collectors.summingInt(Integer::intValue)));
+		return result;
 	}
 	
 	/* (non-Javadoc)
@@ -107,6 +119,15 @@ public class Path {
 	 */
 	public Integer size(){
 		return this.path.size();
+	}
+
+	/**
+	 * Gets the first.
+	 *
+	 * @return the first
+	 */
+	public Route getFirst() {
+		return this.path.getFirst();
 	}
 
 }
