@@ -60,7 +60,11 @@ public class TransService {
 	 */
 	public TransService numberOfTrips(String start, String finish, StopsCondition condition) {
 		Integer number = graph.numberOfTrips(start, finish, condition);
-		result.add(number.toString());
+		if(number > 0){
+			result.add(number.toString());
+		}else{
+			result.add(StateResult.NO_SUCH_ROUTE);
+		}
 		return this;
 	}
 

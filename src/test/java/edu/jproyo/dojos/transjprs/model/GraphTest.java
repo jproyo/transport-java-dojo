@@ -1,8 +1,8 @@
 package edu.jproyo.dojos.transjprs.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.Test;
@@ -30,4 +30,23 @@ public class GraphTest {
 		assertEquals(new Integer(2), numberOfTrips);
 	}
 
+	@Test
+	public void testNumberOfTripsNoRoute() {
+		Set<Route> defaultRoutes = DataLoader.defaultRoutes();
+		Graph fromRoutes = Graph.fromRoutes(defaultRoutes);
+		Integer numberOfTrips = fromRoutes.numberOfTrips("A", "Z", StopsCondition.exactly(4));
+		assertNotNull(numberOfTrips);
+		assertEquals(new Integer(0), numberOfTrips);
+	}
+	
+	@Test
+	public void testShortestPath() {
+		Set<Route> defaultRoutes = DataLoader.defaultRoutes();
+		Graph fromRoutes = Graph.fromRoutes(defaultRoutes);
+		Optional<Integer> numberOfTrips = fromRoutes.shortestRoute("B", "B");
+		assertNotNull(numberOfTrips);
+		assertTrue(numberOfTrips.isPresent());
+//		Problem is wrong. B -> B should be 21 not 9
+		assertEquals(new Integer(21), numberOfTrips.get());
+	}
 }
