@@ -1,12 +1,9 @@
 package edu.jproyo.dojos.transjprs.model;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -83,35 +80,6 @@ public class RoutePath {
 	 */
 	public Integer getStops() {
 		return routePath.size() - 1;
-	}
-	
-	/**
-	 * All posible paths.
-	 *
-	 * @param routes the routes
-	 * @return the list
-	 */
-	public static Map<Route, Set<Route>> allPosiblePaths(Set<Route> routes) {
-		Map<Route, Set<Route>> newGroup = new HashMap<>();
-		routes.forEach(r -> {
-			Set<Route> routeLinked = new HashSet<>();
-			routeLinked.add(r);
-			newGroup.put(r, routeLinked);
-		});
-		newGroup.forEach((k,v) -> {
-			Set<Route> routesWithoutKey = routes.stream().filter(r -> !r.equals(k)).collect(Collectors.toSet());
-			v.addAll(collectAllRoutes(routesWithoutKey, k));
-		});
-		return newGroup;
-	}
-
-
-	private static Set<Route> collectAllRoutes(Set<Route> routesWithoutKey, Route key) {
-		Set<Route> routes = new HashSet<>();
-		routesWithoutKey.stream().filter(r -> r.getFrom().equals(key.getTo())).forEach(routes::add);
-		Set<Set<Route>> collect = routes.stream().map(k -> collectAllRoutes(routesWithoutKey.stream().filter(r -> !r.equals(k)).collect(Collectors.toSet()), k)).collect(Collectors.toSet());
-		collect.forEach(routes::addAll);
-		return routes;
 	}
 	
 }

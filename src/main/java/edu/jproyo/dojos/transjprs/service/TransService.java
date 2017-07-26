@@ -1,14 +1,8 @@
 package edu.jproyo.dojos.transjprs.service;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import edu.jproyo.dojos.transjprs.model.Graph;
-import edu.jproyo.dojos.transjprs.model.Point;
 import edu.jproyo.dojos.transjprs.model.Route;
 import edu.jproyo.dojos.transjprs.model.RoutePath;
 import edu.jproyo.dojos.transjprs.model.StopsCondition;
@@ -64,8 +58,10 @@ public class TransService {
 	 * @param condition the condition
 	 * @return the trans service
 	 */
-	public TransService numberOfTrips(Point start, Point finish, StopsCondition condition) {
-		graph.numberOfTrips(start, finish)
+	public TransService numberOfTrips(String start, String finish, StopsCondition condition) {
+		Integer number = graph.numberOfTrips(start, finish, condition);
+		result.add(number.toString());
+		return this;
 //		Map<Route, Set<Route>> paths = RoutePath.allPosiblePaths(routes);
 //		List<Route> selectedStarted = paths.keySet().stream().filter(route -> route.getFrom().equals(start.getStop())).collect(Collectors.toList());
 //		int count = 0;
@@ -81,7 +77,6 @@ public class TransService {
 //			}
 //		}
 //		result.add(Integer.toString(count));
-		return this;
 	}
 
 	/**
@@ -102,7 +97,7 @@ public class TransService {
 	 * @param distanceLess the distance less
 	 * @return the trans service
 	 */
-	public TransService numberOfRoutes(Point start, Point finish, StopsCondition distanceLess) {
+	public TransService numberOfRoutes(String start, String finish, StopsCondition distanceLess) {
 		return this;
 	}
 	

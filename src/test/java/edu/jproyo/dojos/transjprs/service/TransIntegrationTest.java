@@ -4,7 +4,6 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import edu.jproyo.dojos.transjprs.model.Point;
 import edu.jproyo.dojos.transjprs.model.RoutePath;
 import edu.jproyo.dojos.transjprs.model.StopsCondition;
 import edu.jproyo.dojos.transjprs.utils.DataLoader;
@@ -38,10 +37,10 @@ public class TransIntegrationTest {
 				.calculateDistance(RoutePath.as("A","E","B","C","D"))
 				.calculateDistance(RoutePath.as("A","E","D"))
 				.numberOfTrips("C", "C", StopsCondition.atLeast(3))
-				.numberOfTrips(Point.start("A"), Point.finish("C"), StopsCondition.exactly(4))
+				.numberOfTrips("A", "C", StopsCondition.exactly(4))
 				.shortestRouteLength(RoutePath.as("A", "C"))
 				.shortestRouteLength(RoutePath.as("B", "B"))
-				.numberOfRoutes(Point.start("C"), Point.finish("C"), StopsCondition.distanceLess(30))
+				.numberOfRoutes("C", "C", StopsCondition.distanceLess(30))
 				.collect();
 		assertNotNull(result);
 	}

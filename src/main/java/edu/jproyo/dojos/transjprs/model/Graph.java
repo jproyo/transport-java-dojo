@@ -92,4 +92,44 @@ public class Graph {
 		}
 	}
 
+	/**
+	 * Number of trips.
+	 *
+	 * @param start the start
+	 * @param finish the finish
+	 * @param condition the condition
+	 * @return the integer
+	 */
+	public Integer numberOfTrips(String start, String finish, StopsCondition condition) {
+		Set<Path> queueRoutes = new HashSet<>();
+		for (Route route : routes.get(start)) {
+			recursiveBuild(queueRoutes, new Path(), route);
+		}
+		return queueRoutes.stream().filter(p -> p.finishWith(finish, condition)).collect(Collectors.toSet()).size();
+	}
+	
+
+	/**
+	 * Recursive build.
+	 *
+	 * @param queueRoutes the queue routes
+	 * @param path the path
+	 * @param start the start
+	 */
+	public void recursiveBuild(Set<Path> queueRoutes, Path path, Route start){
+		path.add(start);
+		Set<Route> routesStart = routes.get(start.getTo());
+		for (Route route : routesStart) {
+			if(!path.isLastToEqual(route.getFrom())){
+				Path newPath = path.makeNew();
+				newPath.removeLast();
+				if(newPath.isLastToEqual(route.getFrom())){
+					recursiveBuild(queueRoutes, newPath, route);
+				}
+			} else if(!path.contains(route)){
+				recursiveBuild(queueRoutes, path, route);
+			}
+			queueRoutes.add(path);
+		}
+	}
 }

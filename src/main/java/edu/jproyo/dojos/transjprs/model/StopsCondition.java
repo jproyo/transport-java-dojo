@@ -115,7 +115,7 @@ public class StopsCondition {
 	public boolean applyCondition(Integer stops) {
 		switch (condition) {
 		case atLeast:
-			return stops <= this.stops;
+			return stops >= this.stops;
 		case distanceLessThan:
 			return stops < this.stops;
 		case exactly:

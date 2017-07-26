@@ -2,19 +2,15 @@ package edu.jproyo.dojos.transjprs.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import edu.jproyo.dojos.transjprs.utils.DataLoader;
 
 public class RoutePathTest {
 	
@@ -66,15 +62,6 @@ public class RoutePathTest {
 		Optional<Set<Route>> segments = target.getSegments();
 		assertFalse(segments.isPresent());
 	}
-	
-	
-	@Test
-	public void testAllPosiblePaths() {
-		Set<Route> defaultRoutes = DataLoader.defaultRoutes();
-		Map<Route, Set<Route>> allPosiblePaths = RoutePath.allPosiblePaths(defaultRoutes);
-		Set<Route> linkedList = allPosiblePaths.get(Route.as("C", "E", 0));
-		assertNotNull(linkedList);
-	}
-	
+
 	
 }
