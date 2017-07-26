@@ -108,10 +108,8 @@ public class Path {
 		for (Route route : path) {
 			count++;
 			if(route.getTo().equals(finish)){
-				if(condition.applyCondition(count)){
-					found = true;
-					break;
-				}
+				found = true;
+				break;
 			}
 		}
 		return condition.applyCondition(count) && found;

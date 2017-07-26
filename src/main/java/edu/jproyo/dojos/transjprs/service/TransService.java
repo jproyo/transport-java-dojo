@@ -62,21 +62,6 @@ public class TransService {
 		Integer number = graph.numberOfTrips(start, finish, condition);
 		result.add(number.toString());
 		return this;
-//		Map<Route, Set<Route>> paths = RoutePath.allPosiblePaths(routes);
-//		List<Route> selectedStarted = paths.keySet().stream().filter(route -> route.getFrom().equals(start.getStop())).collect(Collectors.toList());
-//		int count = 0;
-//		for (Route routeStarted : selectedStarted) {
-//			Set<Route> routes = paths.get(routeStarted);
-//			Iterator<Route> iterator = routes.iterator();
-//			for (int i = 0; iterator.hasNext(); i++) {
-//				Route routeCurrent = iterator.next();
-//				if(routeCurrent.getTo().equals(finish.getStop()) && condition.applyCondition(i+1)){
-//					++count;
-//					break;
-//				}
-//			}
-//		}
-//		result.add(Integer.toString(count));
 	}
 
 	/**

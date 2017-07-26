@@ -105,6 +105,7 @@ public class Graph {
 		for (Route route : routes.get(start)) {
 			recursiveBuild(queueRoutes, new Path(), route);
 		}
+		queueRoutes.forEach(System.out::println);
 		return queueRoutes.stream().filter(p -> p.finishWith(finish, condition)).collect(Collectors.toSet()).size();
 	}
 	
