@@ -37,7 +37,11 @@ public class Path {
 		if(this == obj) return true;
 		if(!(obj instanceof Path)) return false;
 		Path other = (Path)obj;
-		return this.path.stream().allMatch(elem -> other.path.contains(elem));
+		boolean equals = true;
+		for (int i = 0; i < this.path.size() && equals; i++) {
+			equals = this.path.get(i).equals(other.path.get(i));
+		}
+		return equals;
 	}
 	
 	/* (non-Javadoc)
@@ -94,25 +98,15 @@ public class Path {
 	public boolean contains(Route route) {
 		return this.path.contains(route);
 	}
-
+	
+	
 	/**
-	 * Finish with.
+	 * Size.
 	 *
-	 * @param finish the finish
-	 * @param condition the condition
-	 * @return true, if successful
+	 * @return the integer
 	 */
-	public boolean finishWith(String finish, StopsCondition condition) {
-		int count = 0;
-		boolean found = false;
-		for (Route route : path) {
-			count++;
-			if(route.getTo().equals(finish)){
-				found = true;
-				break;
-			}
-		}
-		return condition.applyCondition(count) && found;
+	public Integer size(){
+		return this.path.size();
 	}
 
 }

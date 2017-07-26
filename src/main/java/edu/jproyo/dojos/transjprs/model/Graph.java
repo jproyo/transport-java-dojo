@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The Class Graph.
@@ -103,13 +104,34 @@ public class Graph {
 	public Integer numberOfTrips(String start, String finish, StopsCondition condition) {
 		Set<Path> queueRoutes = new HashSet<>();
 		for (Route route : routes.get(start)) {
-			recursiveBuild(queueRoutes, new Path(), route);
+			recursiveBuild(queueRoutes, new Path(), route, finish);
 		}
 		queueRoutes.forEach(System.out::println);
-		return queueRoutes.stream().filter(p -> p.finishWith(finish, condition)).collect(Collectors.toSet()).size();
+		return new Long(queueRoutes.stream().map(Path::size).filter(condition::applyCondition).count()).intValue();
 	}
 	
 
+	public void recursiveBuild(Set<Path> queueRoutes, Path path, Route start, String finish){
+		path.add(start);
+		Set<Route> routesStart = routes.get(start.getTo());
+		for (Route route : routesStart) {
+			if(path.isLastToEqual(finish)){				
+				queueRoutes.add(path);
+				recursiveBuild(queueRoutes, path.makeNew(), route, finish);
+			}else if(!path.isLastToEqual(route.getFrom())){
+				Path newPath = path.makeNew();
+				newPath.removeLast();
+				if(newPath.isLastToEqual(route.getFrom())){
+					recursiveBuild(queueRoutes, newPath, route, finish);
+				}
+			} else if(!path.contains(route)){
+				recursiveBuild(queueRoutes, path, route, finish);
+			}else if(path.isLastToEqual(finish)){
+				queueRoutes.add(path);
+			}
+		}
+	}
+	
 	/**
 	 * Recursive build.
 	 *

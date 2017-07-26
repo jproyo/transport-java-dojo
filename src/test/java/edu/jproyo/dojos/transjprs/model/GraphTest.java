@@ -1,8 +1,8 @@
 package edu.jproyo.dojos.transjprs.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
