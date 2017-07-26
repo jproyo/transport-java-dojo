@@ -105,6 +105,24 @@ public class StopsCondition {
 		/** The distance less than. */
 		distanceLessThan
 	}
+
+	/**
+	 * Filter condition.
+	 *
+	 * @param stops the stops
+	 * @return true, if successful
+	 */
+	public boolean applyCondition(Integer stops) {
+		switch (condition) {
+		case atLeast:
+			return stops <= this.stops;
+		case distanceLessThan:
+			return stops < this.stops;
+		case exactly:
+			return stops.equals(this.stops);
+		}
+		return false;
+	}
 	
 	
 }

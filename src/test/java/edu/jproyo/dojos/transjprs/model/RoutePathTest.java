@@ -4,11 +4,16 @@ import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import edu.jproyo.dojos.transjprs.utils.DataLoader;
 
 public class RoutePathTest {
 	
@@ -59,6 +64,14 @@ public class RoutePathTest {
 	public void testGetSegmentsFailNoRoutes() {
 		Optional<Set<Route>> segments = target.getSegments();
 		assertFalse(segments.isPresent());
+	}
+	
+	
+	@Test
+	public void testAllPosiblePaths() {
+		Map<Route, LinkedList<Route>> allPosiblePaths = RoutePath.allPosiblePaths(DataLoader.defaultRoutes());
+		LinkedList<Route> linkedList = allPosiblePaths.get(Route.as("C", "E", 0));
+		assertNotNull(linkedList);
 	}
 	
 	
