@@ -67,7 +67,6 @@ public class TransService {
 	/**
 	 * Shortest route length.
 	 *
-	 * @param route the route
 	 * @return the trans service
 	 */
 	public TransService shortestRouteLength(String start, String finish) {
